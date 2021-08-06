@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Schedule App</title>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <h2>Schedule App</h2>
+      </header>
+
+      <main>
+        <div class="create-form">
+          <div class="add-btn-box" v-if="!isAddingSchedule">
+            <button class="primary-btn" @click="clickAddScheduleBtn">
+              <span class="material-icons material-icons-outlined">add</span>
+              Add a Schedule
+            </button>
+          </div>
+
+          <fieldset v-if="isAddingSchedule">
+            <legend>Add a Schedule</legend>
+            <div class="form-row">
+              <label>Date:</label>
+              <input type="date" v-model="createForm.date" />
+            </div>
+
+            <div class="form-row">
+              <label>Start Time:</label>
+              <input type="time" v-model="createForm.startTime" />
+            </div>
+
+            <div class="form-row">
+              <label>End Time:</label>
+              <input type="time" v-model="createForm.endTime" />
+            </div>
+
+            <div class="form-row">
+              <label>Content:</label>
+              <textarea v-model="createForm.content"></textarea>
+            </div>
+
+            <div class="btn-container">
+              <button class="default-btn" @click="clickCancelBtn">Cancel</button>
+              <button class="primary-btn" @click="clickConfirmBtn">Confirm</buttom>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="search-form">
+          <fieldset>
+            <legend>Search</legend>
+            <div class="form-row">
+              <label>Date:</label>
+              <input type="date" v-model="searchForm.date" />
+            </div>
+
+            <div class="form-row">
+              <label>Content:</label>
+              <input v-model="searchForm.content" />
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="list">
+          <div class="item" v-for="(item, index) in searchedList" :key="item.content">
+            <div class="item-row">
+              <span class="material-icons material-icons-outlined">
+                event
+              </span>
+              {{item.date}}
+            </div>
+            
+            <div class="item-row">
+              <span class="material-icons material-icons-outlined">
+                schedule
+              </span>
+              {{item.startTime}} ~ {{item.endTime}}
+            </div>
+            
+            <div>{{item.content}}</div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <h5>Contact Us</h5>
+        <div class="contact-us-item">
+          <span class="material-icons material-icons-outlined">
+            person
+          </span>
+          Xuetong Zhao
+        </div>
+        <div class="contact-us-item">
+          <span class="material-icons material-icons-outlined">
+            email
+          </span>zhaoxuet@deakin.edu.au
+        </div>
+      </footer>
+    </div>
+
+    <script>
+new window.Vue({
+  el: "#app",
+  data: {
+    isAddingSchedule: false,
+    createForm: {
+      date: undefined,
+      startTime: undefined,
+      endTime: undefined,
+      content: undefined
+    },
+    searchForm: {
+      date: undefined,
+      content: undefined
+    },
+    list: [
+      {
+        date: "2021-08-05",
+        startTime: "09:00",
+        endTime: "10:00",
+        content: "Go to breakfast"
+      },
+      {
+        date: "2021-08-06",
+        startTime: "12:00",
+        endTime: "13:00",
+        content: "Go to lunch"
+      }
+    ]
+  },
+  computed: {
+    searchedList() {
+      let list = this.list;
+      if (this.searchForm.date) {
+        list = list.filter((it) => it.date === this.searchForm.date);
+      }
+      if (this.searchForm.content) {
+        list = list.filter((it) =>
+          it.content.includes(this.searchForm.content)
+        );
+      }
+      return list;
+    }
+  },
+  methods: {
+    clickAddScheduleBtn() {
+      this.isAddingSchedule = true;
+    },
+    clickCancelBtn() {
+      this.isAddingSchedule = false;
+    },
+    clickConfirmBtn() {
+      this.isAddingSchedule = false;
+      const { date, startTime, endTime, content } = this.createForm;
+      if (!date || !startTime || !endTime || !content) {
+        window.alert("Please fill in all fields.");
+      }
+      this.list.push({
+        date,
+        startTime,
+        endTime,
+        content
+      });
+    }
+  }
+});
+    </script>
+  </body>
+</html>
