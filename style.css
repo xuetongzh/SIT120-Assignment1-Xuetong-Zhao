@@ -12,6 +12,31 @@ header {
   margin: 0;
   padding: 10px 20px;
   height: 92px;
+  position: relative;
+}
+
+.header-right {
+  font-size: 20px;
+  padding: 0px 30px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header-right a:link,
+.header-right a:visited {
+  color: #4fc3f7;
+  text-decoration: none;
+}
+
+.profile-img {
+  height: 45px;
+  width: 45px;
+  border: 1px solid lightgray;
+  border-radius: 24px;
+  vertical-align: middle;
+  margin: 0 5px;
 }
 
 main {
@@ -88,6 +113,7 @@ fieldset {
   border-radius: 6px;
   margin-bottom: 12px;
   padding: 4px 12px;
+  position: relative;
 }
 
 .item-row {
@@ -98,6 +124,25 @@ fieldset {
 }
 .item-row .material-icons {
   margin-right: 8px;
+}
+
+.item-operate-box {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+}
+
+.item:hover .item-operate-box {
+  display: block;
+}
+
+.item-operate-box .material-icons {
+  cursor: pointer;
+}
+.item-operate-box .material-icons:hover {
+  color: #4fc3f7; 
 }
 
 footer {

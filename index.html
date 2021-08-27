@@ -15,6 +15,11 @@
     <div id="app">
       <header>
         <h2>Schedule App</h2>
+        <div class="header-right">
+          <a href="#" id="log_out" class="header-button">Log out</a>
+          <img src="./profile.jpeg" alt="Account icon" class="profile-img">
+          <a href="#">ZHAO</a>
+      </div>
       </header>
 
       <main>
@@ -87,6 +92,12 @@
             </div>
             
             <div>{{item.content}}</div>
+
+            <div class="item-operate-box">
+              <span class="material-icons material-icons-outlined" v-on:click="deleteItem(index)">
+                delete
+              </span>
+            </div>
           </div>
         </div>
       </main>
@@ -107,72 +118,6 @@
       </footer>
     </div>
 
-    <script>
-new window.Vue({
-  el: "#app",
-  data: {
-    isAddingSchedule: false,
-    createForm: {
-      date: undefined,
-      startTime: undefined,
-      endTime: undefined,
-      content: undefined
-    },
-    searchForm: {
-      date: undefined,
-      content: undefined
-    },
-    list: [
-      {
-        date: "2021-08-05",
-        startTime: "09:00",
-        endTime: "10:00",
-        content: "Go to breakfast"
-      },
-      {
-        date: "2021-08-06",
-        startTime: "12:00",
-        endTime: "13:00",
-        content: "Go to lunch"
-      }
-    ]
-  },
-  computed: {
-    searchedList() {
-      let list = this.list;
-      if (this.searchForm.date) {
-        list = list.filter((it) => it.date === this.searchForm.date);
-      }
-      if (this.searchForm.content) {
-        list = list.filter((it) =>
-          it.content.includes(this.searchForm.content)
-        );
-      }
-      return list;
-    }
-  },
-  methods: {
-    clickAddScheduleBtn() {
-      this.isAddingSchedule = true;
-    },
-    clickCancelBtn() {
-      this.isAddingSchedule = false;
-    },
-    clickConfirmBtn() {
-      this.isAddingSchedule = false;
-      const { date, startTime, endTime, content } = this.createForm;
-      if (!date || !startTime || !endTime || !content) {
-        window.alert("Please fill in all fields.");
-      }
-      this.list.push({
-        date,
-        startTime,
-        endTime,
-        content
-      });
-    }
-  }
-});
-    </script>
+    <script src="./main.js"></script>
   </body>
 </html>
